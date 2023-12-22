@@ -20,6 +20,16 @@ return new class extends Migration
             $table->timestamps();
             $table->softDeletes();
         });
+
+        // Add a demo user
+        DB::table('users')->insert([
+            'name' => 'Jafan',
+            'email_address' => 'jafan2222@gmail.com',
+            'email' => 'jafan2222@gmail.com',
+            'password' => bcrypt('password123'), // Use bcrypt to hash the password
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
     }
 
     /**

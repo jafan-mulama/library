@@ -2,11 +2,12 @@
 
 // In a Laravel model file for the 'User' model (e.g., User.php)
 namespace App\Models;
+use Laravel\Sanctum\HasApiTokens;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class User extends Model
+class User extends Authenticatable
 {
     use SoftDeletes;
 
