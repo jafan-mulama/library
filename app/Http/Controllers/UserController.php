@@ -1,6 +1,5 @@
 <?php
 namespace App\Http\Controllers;
-use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -36,23 +35,6 @@ class UserController extends Controller
 
         return response()->json(['user' => $user], 201);
     }
-    public function register(Request $request)
-    {
-        $data = $request->validate([
-            'name' => 'required|string|max:100',
-            'email_address' => 'required|email|max:100',
-            'email' => 'required|email|unique:users|max:150',
-            'password' => 'required|string|min:6',
-        ]);
-
-        $data['password'] = Hash::make($data['password']);
-
-        $user = User::create($data);
-
-        $token = $user->createToken('api-token')->plainTextToken;
-
-        return response()->json(['user' => $user, 'token' => $token], 201);
-    }
     public function update(Request $request, $id)
     {
         $user = User::findOrFail($id);
@@ -82,7 +64,9 @@ class UserController extends Controller
     }
 
 
-
+    /**
+     * @throws ValidationException
+     */
     public function login(Request $request)
     {
         $credentials = $request->validate([

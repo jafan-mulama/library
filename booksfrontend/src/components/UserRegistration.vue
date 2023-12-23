@@ -19,6 +19,7 @@
 import axios from 'axios';
 
 export default {
+
     data() {
         return {
             userData: {
@@ -36,7 +37,7 @@ export default {
             this.error = null;
 
             // Use the correct URL for your Laravel backend
-            axios.post('http://127.0.0.1:8000/api/register', this.userData)
+            axios.post('http://localhost:8000/api/register', this.userData)
                 .then(response => {
                     const { user, token } = response.data;
 

@@ -21,7 +21,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-
 // Routes for BookController
 Route::get('/books', [BookController::class, 'index'])->name('index');
 Route::get('/books/{id}', [BookController::class, 'show'])->name('books.show');
@@ -44,7 +43,7 @@ Route::put('/users/{id}', [UserController::class, 'update'])->name('users.update
 Route::delete('/users/{id}', [UserController::class, 'destroy'])->name('users.destroy');
 
 // Authentication Routes
-Route::post('/register', [UserController::class, 'register'])->name('register');
+Route::post('/register', [UserController::class, 'store'])->name('register');
 Route::post('/login', [UserController::class, 'login'])->name('login');
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user', [UserController::class, 'currentUser'])->name('user.current');
