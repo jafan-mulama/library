@@ -10,12 +10,16 @@
 
 import UserRegistration from "@/components/UserRegistration.vue";
 import HelloWorld from "@/components/HelloWorld.vue";
+import UserLogin from "@/components/UserLogin.vue";
+import BookLoans from "@/components/BookLoans.vue";
 
 export default {
     name: 'app',
     components: {
         UserRegistration,
-        HelloWorld
+        HelloWorld,
+        UserLogin,
+        BookLoans
     }
 }
 </script>

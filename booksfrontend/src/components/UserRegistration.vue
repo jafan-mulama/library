@@ -47,7 +47,7 @@ export default {
                     console.log('Registration successful!');
 
                     // Redirect to a new page or another route
-                    this.$router.push('/BookLoans');
+                    this.$router.push('/login');
                 })
                 .catch(error => {
                     // Check if the error response contains data
