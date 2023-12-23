@@ -17,9 +17,8 @@
 </template>
 <script>
 import axios from 'axios';
-
 export default {
-
+    name: 'UserRegistration',
     data() {
         return {
             userData: {
@@ -65,3 +64,4 @@ export default {
     },
 };
 </script>
+
