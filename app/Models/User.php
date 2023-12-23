@@ -6,8 +6,10 @@ use Laravel\Sanctum\HasApiTokens;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Foundation\Auth\User as Authenticate;
 
-class User extends Authenticatable
+
+class User extends Authenticate
 {
     use SoftDeletes;
 
