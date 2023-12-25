@@ -21,4 +21,41 @@ export const logout = async () => {
         return false;
     }
 };
-/** end of logout function **/
+
+/**  // alternative method handling the navigation guard logic for admin  user
+//
+export const isAdmin = () => {
+    const userRole = localStorage.getItem('userRole');
+    return userRole === 'admin';
+};
+
+export const requireAdmin = (to, from, next) => {
+    if (isAdmin()) {
+        next(); // Allow access
+    } else {
+        // Redirect to a different route or show an error message
+        next('/login'); // Redirect to the home page, for example
+    }
+};
+ **/
+
+/**  handling the navigation guard logic for admin and normal user  by resusing Api **/
+export const getUserRole = () => {
+    return localStorage.getItem('userRole');
+};
+
+export const requireUserRole = (requiredRole) => {
+    return (to, from, next) => {
+        const userRole = getUserRole();
+        // Check if the user is authenticated and has the required role
+        if (userRole === requiredRole) {
+            next(); // Allow access
+        } else {
+            // Redirect to a different route or show an error message
+            next('/login'); // Redirect to the home page, for example
+        }
+    };
+};
+
+
+

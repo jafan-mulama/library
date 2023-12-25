@@ -5,6 +5,7 @@ import UserLogin from "@/components/UserLogin.vue";
 import BookLoans from "@/components/BookLoans.vue";
 import UserRegistration from "@/components/UserRegistration.vue";
 import BookManagement from "@/components/BookManagement.vue";
+import {requireUserRole} from "@/api/api";
 
 
 const routes = [
@@ -28,32 +29,14 @@ const routes = [
         path: '/booksLoans',
         name: 'BookLoans',
         component:  BookLoans,
-        beforeEnter: (to, from, next) => {
-            const userRole = localStorage.getItem('userRole');
-            // Check if the user is authenticated and has the user role
-            if (userRole === 'user') {
-                next(); // Allow access
-            } else {
-                // Redirect to a different route or show an error message
-                next('/login'); // Redirect to the home page, for example
-            }
-        }
+        beforeEnter: requireUserRole('user'),//import {requireUserRole} from "@/api/api"; this is reused 
     },
     {
         path: '/BookManagement',
         name: 'BookManagement',
         component: BookManagement,
-        beforeEnter: (to, from, next) => {
-            const userRole = localStorage.getItem('userRole');
+        beforeEnter: requireUserRole('admin'),
 
-            // Check if the user is authenticated and has the 'admin' role
-            if (userRole === 'admin') {
-                next(); // Allow access
-            } else {
-                // Redirect to a different route or show an error message
-                next('/login'); // Redirect to the home page, for example
-            }
-        },
     }
 ]
 const router = createRouter({
