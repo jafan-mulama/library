@@ -36,6 +36,7 @@
 
 <script>
 export default {
+    name: 'BookManagement',
     data() {
         return {
             newBook: {

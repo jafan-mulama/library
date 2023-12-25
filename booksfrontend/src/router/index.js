@@ -4,6 +4,7 @@ import HelloWorld from "@/components/HelloWorld.vue";
 import UserLogin from "@/components/UserLogin.vue";
 import BookLoans from "@/components/BookLoans.vue";
 import UserRegistration from "@/components/UserRegistration.vue";
+import BookManagement from "@/components/BookManagement.vue";
 
 
 const routes = [
@@ -27,10 +28,27 @@ const routes = [
         path: '/loans',
         name: 'BookLoans',
         component:  BookLoans
+    },
+    {
+        path: '/BookManagement',
+        name: 'BookManagement',
+        component: BookManagement,
+        beforeEnter: (to, from, next) => {
+            const userRole = localStorage.getItem('userRole');
+
+            // Check if the user is authenticated and has the 'admin' role
+            if (userRole === 'admin') {
+                next(); // Allow access
+            } else {
+                // Redirect to a different route or show an error message
+                next('/login'); // Redirect to the home page, for example
+            }
+        },
     }
 ]
 const router = createRouter({
     history: createWebHistory(process.env.BASE_URL),
     routes
-})
-export default router
+});
+// Navigation guard to check authentication and admin privileges
+export default router;

@@ -35,6 +35,7 @@ export default {
                     const {user, token} = response.data;
 
                     localStorage.setItem('token', token);
+                    localStorage.setItem('userRole', user.role);
 
                     console.log(user);
                     console.log('Login successful!');
@@ -47,6 +48,7 @@ export default {
                     } else {
                         // Handle other roles or unexpected cases
                         console.error('Unknown user role');
+                        //  this.$router.push('/');
                     }
                 })
                 .catch(error => {
