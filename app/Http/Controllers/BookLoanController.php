@@ -21,8 +21,9 @@ class BookLoanController extends Controller
 
     public function store(Request $request)
     {
-        // Validation and creation logic here
+
     }
+
 
     public function update(Request $request, $id)
     {
