@@ -15,8 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string('name', 100);
             $table->string('email_address', 100);
-            $table->string('email', 150);
+            $table->string('email', 150)->unique(); // Ensure email is unique
             $table->string('password', 100);
+            $table->string('role')->default('user'); // Add a default role for users
             $table->timestamps();
             $table->softDeletes();
         });
@@ -27,6 +28,7 @@ return new class extends Migration
             'email_address' => 'jafan2222@gmail.com',
             'email' => 'jafan2222@gmail.com',
             'password' => bcrypt('password123'), // Use bcrypt to hash the password
+            'role'=> 'admin',
             'created_at' => now(),
             'updated_at' => now(),
         ]);

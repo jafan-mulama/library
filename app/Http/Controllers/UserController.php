@@ -29,7 +29,8 @@ class UserController extends Controller
             'email' => 'required|email|unique:users|max:150',
             'password' => 'required|string|max:100',
         ]);
-
+        // For example, set the role to 'admin' if a specific condition is met
+        $data['role'] = $request->input('is_admin') ? 'admin' : 'user';
         $data['password'] = Hash::make($data['password']);
 
         $user = User::create($data);

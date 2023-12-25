@@ -12,7 +12,7 @@ class User extends Authenticate
     use HasFactory, HasApiTokens, SoftDeletes;
 
     protected $fillable = [
-        'name', 'email_address', 'email', 'password', 'created_at', 'updated_at', 'deleted_at'
+        'name', 'email_address', 'email','password','role', 'created_at', 'updated_at', 'deleted_at'
     ];
 
     public function booksAdded()
