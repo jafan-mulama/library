@@ -21,7 +21,7 @@ class BookLoanController extends Controller
 
     public function store(Request $request)
     {
-
+        // books sore logic here
     }
 
 
