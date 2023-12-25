@@ -25,9 +25,19 @@ const routes = [
     },
 
     {
-        path: '/loans',
+        path: '/booksloans',
         name: 'BookLoans',
-        component:  BookLoans
+        component:  BookLoans,
+        beforeEnter: (to, from, next) => {
+            const userRole = localStorage.getItem('userRole');
+            // Check if the user is authenticated and has the user role
+            if (userRole === 'user') {
+                next(); // Allow access
+            } else {
+                // Redirect to a different route or show an error message
+                next('/login'); // Redirect to the home page, for example
+            }
+        }
     },
     {
         path: '/BookManagement',
