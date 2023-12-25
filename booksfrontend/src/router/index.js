@@ -1,9 +1,9 @@
 
 import { createRouter, createWebHistory } from 'vue-router'
-import UserRegistration from "@/components/UserRegistration.vue";
 import HelloWorld from "@/components/HelloWorld.vue";
 import UserLogin from "@/components/UserLogin.vue";
 import BookLoans from "@/components/BookLoans.vue";
+import UserRegistration from "@/components/UserRegistration.vue";
 
 
 const routes = [

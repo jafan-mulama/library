@@ -38,7 +38,7 @@ export default {
                     console.log('Login successful!');
 
                     // Redirect to a new page or another route
-                    this.$router.push('/Loans');
+                    this.$router.push('/BookLoans');
                 })
                 .catch(error => {
                     if (error.response && error.response.data && error.response.data.error) {
