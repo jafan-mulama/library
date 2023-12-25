@@ -25,7 +25,7 @@ const routes = [
     },
 
     {
-        path: '/booksloans',
+        path: '/booksLoans',
         name: 'BookLoans',
         component:  BookLoans,
         beforeEnter: (to, from, next) => {
