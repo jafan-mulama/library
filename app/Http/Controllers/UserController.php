@@ -1,5 +1,7 @@
 <?php
+
 namespace App\Http\Controllers;
+
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -19,7 +21,6 @@ class UserController extends Controller
         $user = User::findOrFail($id);
         return response()->json(['user' => $user]);
     }
-
     public function store(Request $request)
     {
         $data = $request->validate([
@@ -35,13 +36,14 @@ class UserController extends Controller
 
         return response()->json(['user' => $user], 201);
     }
+
     public function update(Request $request, $id)
     {
         $user = User::findOrFail($id);
 
         $data = $request->validate([
             'name' => 'string|max:100',
-            'email_address' => 'required|email|max:100',
+            'email_address' => 'email|max:100',
             'email' => 'email|unique:users|max:150',
             'password' => 'string|max:100',
         ]);
@@ -54,7 +56,6 @@ class UserController extends Controller
 
         return response()->json(['user' => $user]);
     }
-
     public function destroy($id)
     {
         $user = User::findOrFail($id);
@@ -63,14 +64,13 @@ class UserController extends Controller
         return response()->json(['message' => 'User deleted successfully']);
     }
 
-
     /**
      * @throws ValidationException
      */
     public function login(Request $request)
     {
         $credentials = $request->validate([
-            'email' => 'required',
+            'email' => 'required|email',
             'password' => 'required',
         ]);
 

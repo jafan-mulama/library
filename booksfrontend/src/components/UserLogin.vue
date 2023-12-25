@@ -14,7 +14,7 @@
 import axios from 'axios';
 
 export default {
-    name: 'UserRegistration',
+    name: 'UserLogin',
     data() {
         return {
             loginData: {
@@ -26,25 +26,28 @@ export default {
     },
     methods: {
         login() {
-            axios.post("http://127.0.0.1:8000/api/login", this.loginData)
-                .then(response => {
-                    console.log(response); // Log the entire response for debugging
+            this.error = null;
 
-                    const data = response.data;
-                    try {
-                        if (data.status === true) {
-                            alert("Login Successfully");
-                            this.$router.push('/Loans');
-                        } else {
-                            alert("Login failed");
-                        }
-                    } catch (err) {
-                        alert("Error, please try again");
-                    }
+            axios.post('http://127.0.0.1:8000/api/login', this.loginData)
+                .then(response => {
+                    const {user, token} = response.data;
+
+                    localStorage.setItem('token', token);
+
+                    console.log(user);
+                    console.log('Login successful!');
+
+                    // Redirect to a new page or another route
+                    this.$router.push('/Loans');
                 })
                 .catch(error => {
+                    if (error.response && error.response.data && error.response.data.error) {
+                        this.error = error.response.data.error;
+                    } else {
+                        this.error = 'An unexpected error occurred.';
+                    }
+
                     console.error(error);
-                    alert("An unexpected error occurred.");
                 });
         },
     },

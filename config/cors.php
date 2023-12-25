@@ -29,24 +29,18 @@ return [
      */
 
     'paths' => [
-        'api/*',
+        'api/*', 'sanctum/csrf-cookie',
         'sanctum/csrf-cookie',
         'login',
         'logout',
         // Add more paths as needed
+
     ],
-
     'allowed_methods' => ['*'],
-
-    'allowed_origins' => ['*'],
-
+    'allowed_origins' => ['http://localhost:8080'], // Add your frontend domain here
     'allowed_origins_patterns' => [],
-
     'allowed_headers' => ['*'],
-
     'exposed_headers' => [],
-
     'max_age' => 0,
-
     'supports_credentials' => false,
 ];
