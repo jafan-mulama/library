@@ -1,17 +1,9 @@
 <template>
-    <form @submit.prevent="login">
-        <label for="email">Email:</label>
-        <input type="email" v-model="credentials.email" required>
-
-        <label for="password">Password:</label>
-        <input type="password" v-model="credentials.password" required>
-
-        <button type="submit">Login</button>
-    </form>
+    <button @click="logout">Logout</button>
 </template>
 
 <script>
-import axios from 'axios';
+import {logout} from "@/api/api";
 
 export default {
     name: 'BookLoans',
@@ -24,17 +16,18 @@ export default {
         };
     },
     methods: {
-        login() {
-            axios.post('/api/login', this.credentials)
-                .then(response => {
-                    console.log(response.data);
-                    // Handle successful login, e.g., redirect to a dashboard
-                })
-                .catch(error => {
-                    console.error(error);
-                    // Handle login error
-                });
+        /** start of logout  import {logout} from "@/api/api"; **/
+        async logout() {
+            const isLoggedOut = await logout();
+
+            if (isLoggedOut) {
+                await this.$router.push('/login');
+            } else {
+                console.error('Logout failed');
+            }
         },
     },
+
+
 };
 </script>

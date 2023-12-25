@@ -1,7 +1,7 @@
 <template>
     <div>
         <h1>Book Management</h1>
-
+        <button @click="logout">Logout</button>
         <!-- Add Book Form -->
         <form @submit.prevent="addBook">
             <label for="name">Book Name:</label>
@@ -35,6 +35,7 @@
 </template>
 
 <script>
+import { logout } from '@/api/api';
 export default {
     name: 'BookManagement',
     data() {
@@ -64,6 +65,18 @@ export default {
                 isbn: '',
             };
         },
+
+        /** start of logout method reused import {logout} from "@/api/api"; **/
+        async logout() {
+            const isLoggedOut = await logout();
+
+            if (isLoggedOut) {
+                await this.$router.push('/login');
+            } else {
+                console.error('Logout failed');
+            }
+        },
+
         // TODO: Add methods to fetch the list of books from the API
     },
     mounted() {

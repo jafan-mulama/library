@@ -42,7 +42,7 @@ export default {
 
                     // Check user role and redirect accordingly
                     if (user.role === 'user') {
-                        this.$router.push('/BookLoans');
+                        this.$router.push('/booksLoans');
                     } else if (user.role === 'admin') {
                         this.$router.push('/BookManagement');
                     } else {
