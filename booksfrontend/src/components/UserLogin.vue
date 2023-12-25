@@ -1,13 +1,15 @@
 <template>
-    <form @submit.prevent="login">
-        <label htmlFor="email">Email:</label>
-        <input type="email" v-model="loginData.email" required>
+    <div class="login-container">
+        <form @submit.prevent="login" class="login-form">
+            <label >Enter your Login Details</label>
+            <br /> <br />
+            <input type="email" v-model="loginData.email" required class="input-field" placeholder="Email">
+            <br />
+            <input type="password" v-model="loginData.password" required class="input-field" placeholder="password">
 
-        <label htmlFor="password">Password:</label>
-        <input type="password" v-model="loginData.password" required>
-
-        <button type="submit">Login</button>
-    </form>
+            <button type="submit" class="login-button">Login</button>
+        </form>
+    </div>
 </template>
 
 <script>
@@ -55,5 +57,33 @@ export default {
 </script>
 
 <style scoped>
-/* Add your styles here */
+
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Align to the top of the container */
+    height: 100vh; /* Set the height of the container to 100% of the viewport height */
+}
+
+.login-form {
+    max-width: 300px;
+    width: 100%;
+    margin-top: 100px; /* Adjust this value to control the distance from the top */
+}
+
+.input-field {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 16px;
+    box-sizing: border-box;
+}
+
+.login-button {
+    background-color: #5446cc;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
 </style>
