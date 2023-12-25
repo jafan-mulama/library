@@ -28,6 +28,7 @@ class UserController extends Controller
             'email_address' => 'required|email|max:100',
             'email' => 'required|email|unique:users|max:150',
             'password' => 'required|string|max:100',
+            'is_admin' => 'boolean', // Add a checkbox in your registration form for admin role
         ]);
         // For example, set the role to 'admin' if a specific condition is met
         $data['role'] = $request->input('is_admin') ? 'admin' : 'user';
@@ -84,7 +85,7 @@ class UserController extends Controller
         $user = $request->user();
         $token = $user->createToken('api-token')->plainTextToken;
 
-        return response()->json(['user' => $user, 'token' => $token]);
+        return response()->json(['user' => $user, 'token' => $token, 'role' => $user->role]);
     }
 
     public function currentUser()

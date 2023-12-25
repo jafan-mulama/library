@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('email', 150)->unique(); // Ensure email is unique
             $table->string('password', 100);
             $table->string('role')->default('user'); // Add a default role for users
+//            update store in controller $data['role'] = $request->input('is_admin') ? 'admin' : 'user';
             $table->timestamps();
             $table->softDeletes();
         });

@@ -39,8 +39,15 @@ export default {
                     console.log(user);
                     console.log('Login successful!');
 
-                    // Redirect to a new page or another route
-                    this.$router.push('/BookLoans');
+                    // Check user role and redirect accordingly
+                    if (user.role === 'user') {
+                        this.$router.push('/BookLoans');
+                    } else if (user.role === 'admin') {
+                        this.$router.push('/BookManagement');
+                    } else {
+                        // Handle other roles or unexpected cases
+                        console.error('Unknown user role');
+                    }
                 })
                 .catch(error => {
                     if (error.response && error.response.data && error.response.data.error) {
