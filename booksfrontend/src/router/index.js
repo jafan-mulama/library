@@ -6,6 +6,7 @@ import UserRegistration from "@/components/UserRegistration.vue";
 import BookManagement from "@/components/BookManagement.vue";
 import RegisterUsers from "@/components/RegisterUsers.vue";
 import {requireUserRole} from "@/api/api";
+import AddBook from "@/components/AddBook.vue";
 
 
 const routes = [
@@ -15,7 +16,7 @@ const routes = [
     {path: '/booksLoans', name: 'BookLoans', component: BookLoans, beforeEnter: requireUserRole('user')}, //import {requireUserRole} from "@/api/api"; this is reused
     {path: '/BookManagement', name: 'BookManagement', component: BookManagement, beforeEnter: requireUserRole('admin')},
     {path: '/RegisterUsers', name: 'RegisterUsers', component: RegisterUsers, beforeEnter: requireUserRole('admin')},
-
+    {path: '/AddBook', name: 'AddBook', component: AddBook, beforeEnter: requireUserRole('admin')}
 ]
 const router = createRouter({
     history: createWebHistory(process.env.BASE_URL),

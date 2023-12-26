@@ -37,7 +37,7 @@ return [
 
     ],
     'allowed_methods' => ['*'],
-    'allowed_origins' => ['http://localhost:8080'], // Add your frontend domain here
+    'allowed_origins' => ['http://localhost:8080/AddBook/'], // Add your frontend domain here
     'allowed_origins_patterns' => [],
     'allowed_headers' => ['*'],
     'exposed_headers' => [],

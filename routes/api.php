@@ -22,7 +22,8 @@ Route::post('/register', [UserController::class, 'store'])->name('register');
 Route::post('/login', [UserController::class, 'login'])->name('login');
 
 // Authenticated routes
-Route::middleware('auth:sanctum')->group(function () {
+Route::middleware(['auth:sanctum', 'cors'])->group(function () {
+
     Route::get('/user', [UserController::class, 'currentUser'])->name('user.current');
     Route::post('/logout', [UserController::class, 'logout'])->name('logout');
 

@@ -15,6 +15,7 @@ class Book extends Model
         'pages', 'image', 'added_by', 'created_at', 'updated_at', 'deleted_at'
     ];
 
+
     public function loans()
     {
         return $this->hasMany(BookLoan::class, 'book_id');
