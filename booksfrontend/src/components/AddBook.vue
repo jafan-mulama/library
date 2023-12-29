@@ -1,119 +1,104 @@
 <template>
-    <div>
-        <h1>Add New Book</h1>
-        <form @submit.prevent="addBook">
-            @csrf <!-- Include the CSRF token here -->
-            <div class="form-group">
-                <label for="name">Book Name</label>
-                <input type="text" v-model="newBook.name" id="name" class="form-control" required>
-            </div>
 
-            <div class="form-group">
-                <label for="publisher">Publisher</label>
-                <input type="text" v-model="newBook.publisher" id="publisher" class="form-control" required>
-            </div>
+    <div id="app">
+        <header>
+            <h1>Welcome to My Vue.js App</h1>
+        </header>
+        <main>
+            <div>
+        <form @submit.prevent="submitForm">
+            <label htmlFor="name">Name:</label>
+            <input v-model="formData.name" type="text" id="name"  name="_token" value="{{ csrf_token() }}" required>
 
-            <div class="form-group">
-                <label for="isbn">ISBN</label>
-                <input type="text" v-model="newBook.isbn" id="isbn" class="form-control" required>
-            </div>
+            <label htmlFor="publisher">Publisher:</label>
+            <input v-model="formData.publisher" type="text" id="publisher" name="_token" value="{{ csrf_token() }}"  required>
 
-            <div class="form-group">
-                <label for="category">Category</label>
-                <input type="text" v-model="newBook.category" id="category" class="form-control" required>
-            </div>
+            <label htmlFor="isbn">ISBN:</label>
+            <input v-model="formData.isbn" type="text" id="isbn" name="_token" value="{{ csrf_token() }}"  required>
 
-            <div class="form-group">
-                <label for="sub_category">Sub Category</label>
-                <input type="text" v-model="newBook.sub_category" id="sub_category" class="form-control" required>
-            </div>
+            <label htmlFor="category">Category:</label>
+            <input v-model="formData.category" type="text" id="category" name="_token" value="{{ csrf_token() }}"  required>
 
-            <div class="form-group">
-                <label for="description">Description</label>
-                <textarea v-model="newBook.description" id="description" class="form-control" required></textarea>
-            </div>
+            <label htmlFor="sub_category">Sub Category:</label>
+            <input v-model="formData.sub_category" type="text" id="sub_category" name="_token" value="{{ csrf_token() }}"  required>
 
-            <div class="form-group">
-                <label for="pages">Number of Pages</label>
-                <input type="number" v-model="newBook.pages" id="pages" class="form-control" required>
-            </div>
+            <label htmlFor="description">Description:</label>
+            <textarea v-model="formData.description" id="description" name="_token" value="{{ csrf_token() }}"  required></textarea>
 
-            <div class="form-group">
-                <label for="image">Image URL</label>
-                <input type="text" v-model="newBook.image" id="image" class="form-control" required>
-            </div>
+            <label htmlFor="pages">Pages:</label>
+            <input v-model="formData.pages" type="number" id="pages" name="_token" value="{{ csrf_token() }}"  required>
 
-            <div class="form-group">
-                <label for="added_by">Added By User ID</label>
-                <input type="number" v-model="newBook.added_by" id="added_by" class="form-control" required>
-            </div>
+            <label htmlFor="image">Image URL:</label>
+            <input v-model="formData.image" type="text" id="image" name="_token" value="{{ csrf_token() }}"  required>
 
-            <button type="submit" class="btn btn-primary">Add Book</button>
+            <label htmlFor="added_by">Added By (User ID):</label>
+            <input v-model="formData.added_by" type="number" id="added_by" name="_token" value="{{ csrf_token() }}"  required>
+
+            <button type="submit">Submit</button>
         </form>
-
-        <!-- Display the book list -->
-        <h1>Book List</h1>
-        <ul>
-            <li v-for="book in books" :key="book.id">
-                {{ book.name }} - {{ book.publisher }}
-            </li>
-        </ul>
+            </div>
+        </main>
     </div>
 </template>
-
 <script>
-import axios from 'axios';
-
+import axios from "axios";
 export default {
-    name: 'AddBook',
+    name: '/AddBook',
     data() {
         return {
-            newBook: {
-                name: '',
-                publisher: '',
-                isbn: '',
-                category: '',
-                sub_category: '',
-                description: '',
-                pages: '',
-                image: '',
-                added_by: '',
+            formData: {
+                name: 'maths',
+                publisher: 'jafan',
+                isbn: '123456',
+                category: 'hkjh',
+                sub_category: 'trdt',
+                description: 'asdfghjk',
+                pages: 1, // Assuming pages is an integer
+                image: 'h.jpg',
+                added_by: 1, // Assuming added_by is an integer
             },
-            books: [],
         };
     },
-    methods: {
-        async addBook() {
-            try {
-                const response = await axios.post('http://localhost:8000/books/create', this.newBook);
-                console.log('Book added:', response.data);
-                this.newBook = {
-                    name: '',
-                    publisher: '',
-                    isbn: '',
-                    category: '',
-                    sub_category: '',
-                    description: '',
-                    pages: '',
-                    image: '',
-                    added_by: '',
-                }; // Reset form fields
-                await this.fetchBooks(); // Refresh the book list after adding
-            } catch (error) {
-                console.error('Error adding book:', error);
-            }
+        methods: {
+            submitForm() {
+                // Send the form data to the server using an HTTP request (e.g., Axios)
+                axios.post('http://localhost:8080/api/books', this.formData, {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.head.querySelector('meta[name="csrf-token"]').content
+                    }
+                })
+                    .then(response => {
+                        console.log('Data submitted successfully:', response.data);
+                        // this.resetForm();
+                    })
+                    .catch(error => {
+                        console.error('Error submitting data:', error);
+                    });
+            },
+            mounted() {
+                // Retrieve CSRF token from meta tag when the component is mounted
+                this.csrfToken = document.head.querySelector('meta[name="csrf-token"]').content;
+            },
         },
-        async fetchBooks() {
-            try {
-                const response = await axios.get('http://localhost:8000/books/');
-                this.books = response.data; // Assuming the response is an array of books
-            } catch (error) {
-                console.error('Error fetching books:', error);
-            }
-        },
-    },
-    mounted() {
-        this.fetchBooks(); // Load books when the component mounts
-    },
+
+        // resetForm() {
+        //     // Reset form fields after successful submission
+        //     this.formData = {
+        //         name: '',
+        //         publisher: '',
+        //         isbn: '',
+        //         category: '',
+        //         sub_category: '',
+        //         description: '',
+        //         pages: 0,
+        //         image: '',
+        //         added_by: 0,
+        //     };
+        // },
 };
 </script>
+
+<style scoped>
+/* Add your component-specific styles here */
+</style>

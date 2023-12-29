@@ -18,10 +18,12 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-// Route to show the form for adding a new book
-Route::get('/books/create', [BookController::class, 'create'])->name('books.create');
-// Route to handle the submission of the form and store the book data
-Route::post('/books', [BookController::class, 'store'])->name('books.store');
-
+// Routes for creating and storing a new book
+//Route::get('/books/create', [BookController::class, 'create'])->name('books.create');
+//Route::post('/books', [BookController::class, 'store'])->name('books.store');
+//
+//// Routes for listing books and editing a specific book
+//Route::get('/books', [BookController::class, 'index'])->name('books.index');
+//Route::get('/books/{id}/edit', [BookController::class, 'edit'])->name('books.edit');    ` `
 
 

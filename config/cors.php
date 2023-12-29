@@ -12,11 +12,12 @@ return [
 
     'defaults' => [
         'allow_credentials' => false,
-        'allow_headers'     => ['Content-Type', 'X-Requested-With'],
+        'allow_headers'     => ['Content-Type', 'X-Requested-With', 'X-CSRF-TOKEN'],
         'allow_methods'     => ['*'],
         'expose_headers'    => [],
         'max_age'           => 0,
         'origin'            => '*',
+
     ],
 
     /*
@@ -34,13 +35,13 @@ return [
         'login',
         'logout',
         // Add more paths as needed
-
     ],
+
     'allowed_methods' => ['*'],
-    'allowed_origins' => ['http://localhost:8080/AddBook/'], // Add your frontend domain here
+    'allowed_origins' => ['http://localhost:8080'],
     'allowed_origins_patterns' => [],
-    'allowed_headers' => ['*'],
+    'allowed_headers' => ['Content-Type', 'X-Requested-With', 'X-CSRF-TOKEN'],
     'exposed_headers' => [],
     'max_age' => 0,
-    'supports_credentials' => false,
+    'supports_credentials' => false, // Set to true to allow credentials
 ];

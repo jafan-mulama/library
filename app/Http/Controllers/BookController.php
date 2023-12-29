@@ -26,53 +26,33 @@ class BookController extends Controller
 
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
+        $request->validate([
             'name' => 'required|string|max:200',
             'publisher' => 'required|string|max:50',
             'isbn' => 'required|string|max:50',
-            'category' => 'string|max:100',
-            'sub_category' => 'string|max:100',
-            'description' => 'string',
-            'pages' => 'integer',
-            'image' => 'string|max:200',
+            'category' => 'required|string|max:100',
+            'sub_category' => 'required|string|max:100',
+            'description' => 'required|string',
+            'pages' => 'required|integer',
+            'image' => 'required|string|max:200',
             'added_by' => 'required|integer',
         ]);
 
-        $book = Book::create($validatedData);
+        // Create a new book instance and save it to the database
+        $book = new Book([
+            'name' => $request->input('name'),
+            'publisher' => $request->input('publisher'),
+            'isbn' => $request->input('isbn'),
+            'category' => $request->input('category'),
+            'sub_category' => $request->input('sub_category'),
+            'description' => $request->input('description'),
+            'pages' => $request->input('pages'),
+            'image' => $request->input('image'),
+            'added_by' => $request->input('added_by'),
+        ]);
 
-        return redirect()->route('books.create')->with('success', 'Book added successfully!');
-
-
-//        // Validate the incoming request data
-//        $request->validate([
-//            'name' => 'required|string|max:200',
-//            'publisher' => 'required|string|max:50',
-//            'isbn' => 'required|string|max:50',
-//            'category' => 'required|string|max:100',
-//            'sub_category' => 'required|string|max:100',
-//            'description' => 'required|string',
-//            'pages' => 'required|integer',
-//            'image' => 'required|string|max:200',
-//            'added_by' => 'required|integer',
-//        ]);
-//
-//        // Create a new book instance and save it to the database
-//        $book = new Book([
-//            'name' => $request->input('name'),
-//            'publisher' => $request->input('publisher'),
-//            'isbn' => $request->input('isbn'),
-//            'category' => $request->input('category'),
-//            'sub_category' => $request->input('sub_category'),
-//            'description' => $request->input('description'),
-//            'pages' => $request->input('pages'),
-//            'image' => $request->input('image'),
-//            'added_by' => $request->input('added_by'),
-//        ]);
-//
-//        $book->save();
-//        return view('books-Create');
-//        // Redirect to the book index page with a success message
-//        //return redirect()->route('index')->with('success', 'Book added successfully!');
+        $book->save();
+        return view('books-Create');
     }
 
 
