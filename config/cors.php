@@ -17,7 +17,6 @@ return [
         'expose_headers'    => [],
         'max_age'           => 0,
         'origin'            => '*',
-
     ],
 
     /*
@@ -43,5 +42,5 @@ return [
     'allowed_headers' => ['Content-Type', 'X-Requested-With', 'X-CSRF-TOKEN'],
     'exposed_headers' => [],
     'max_age' => 0,
-    'supports_credentials' => false, // Set to true to allow credentials
+    'supports_credentials' => true, // Set to true to allow credentials
 ];

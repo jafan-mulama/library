@@ -1,14 +1,23 @@
 <template>
+    <div id="app">
+        <header>
+            <h1>login page</h1>
+        </header>
+        <main>
+            <div>
     <div class="login-container">
         <form @submit.prevent="login" class="login-form">
             <label >Enter your Login Details</label>
             <br /> <br />
-            <input type="email" v-model="loginData.email" required class="input-field" placeholder="Email">
+            <input type="email" v-model="loginData.email" required class="input-field" placeholder="Email" name="_token" value="{{ csrf_token() }}" >
             <br />
-            <input type="password" v-model="loginData.password" required class="input-field" placeholder="password">
+            <input type="password" v-model="loginData.password" required class="input-field" placeholder="password" name="_token" value="{{ csrf_token() }}" >
 
             <button type="submit" class="login-button">Login</button>
         </form>
+    </div>
+            </div>
+        </main>
     </div>
 </template>
 
@@ -30,7 +39,13 @@ export default {
         login() {
             this.error = null;
 
-            axios.post('http://127.0.0.1:8000/api/login', this.loginData)
+            axios.post('/api/login', this.loginData,
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': document.head.querySelector('meta[name="csrf-token"]').content
+                    }
+                })
                 .then(response => {
                     const {user, token} = response.data;
 
