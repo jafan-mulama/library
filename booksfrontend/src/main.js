@@ -2,6 +2,7 @@ import { createApp } from 'vue';
 import App from './App.vue';
 import router from './router';
 import axios from 'axios';
+import './styles/formstyles.css';
 
 // Get the CSRF token value from the meta tag
 const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');

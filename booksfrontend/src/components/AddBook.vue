@@ -1,41 +1,40 @@
 <template>
-
     <div id="app">
         <header>
             <h1>Welcome to My Vue.js App</h1>
         </header>
         <main>
-            <div>
-        <form @submit.prevent="submitForm">
-            <label htmlFor="name">Name:</label>
-            <input v-model="formData.name" type="text" id="name"  name="_token" value="{{ csrf_token() }}" required>
+            <div class="form-container">
+                <form @submit.prevent="submitForm" class="all-form">
+                    <label for="name">Name:</label>
+                    <input v-model="formData.name" type="text" id="name" required class="input-field">
 
-            <label htmlFor="publisher">Publisher:</label>
-            <input v-model="formData.publisher" type="text" id="publisher" name="_token" value="{{ csrf_token() }}"  required>
+                    <label for="publisher">Publisher:</label>
+                    <input v-model="formData.publisher" type="text" id="publisher" required class="input-field">
 
-            <label htmlFor="isbn">ISBN:</label>
-            <input v-model="formData.isbn" type="text" id="isbn" name="_token" value="{{ csrf_token() }}"  required>
+                    <label for="isbn">ISBN:</label>
+                    <input v-model="formData.isbn" type="text" id="isbn" required class="input-field">
 
-            <label htmlFor="category">Category:</label>
-            <input v-model="formData.category" type="text" id="category" name="_token" value="{{ csrf_token() }}"  required>
+                    <label for="category">Category:</label>
+                    <input v-model="formData.category" type="text" id="category" required class="input-field">
 
-            <label htmlFor="sub_category">Sub Category:</label>
-            <input v-model="formData.sub_category" type="text" id="sub_category" name="_token" value="{{ csrf_token() }}"  required>
+                    <label for="sub_category">Sub Category:</label>
+                    <input v-model="formData.sub_category" type="text" id="sub_category" required class="input-field">
 
-            <label htmlFor="description">Description:</label>
-            <textarea v-model="formData.description" id="description" name="_token" value="{{ csrf_token() }}"  required></textarea>
+                    <label for="description">Description:</label>
+                    <textarea v-model="formData.description" id="description" required class="input-field"></textarea>
 
-            <label htmlFor="pages">Pages:</label>
-            <input v-model="formData.pages" type="number" id="pages" name="_token" value="{{ csrf_token() }}"  required>
+                    <label for="pages">Pages:</label>
+                    <input v-model="formData.pages" type="number" id="pages" required class="input-field">
 
-            <label htmlFor="image">Image URL:</label>
-            <input v-model="formData.image" type="text" id="image" name="_token" value="{{ csrf_token() }}"  required>
+                    <label for="image">Image URL:</label>
+                    <input v-model="formData.image" type="text" id="image" required class="input-field">
 
-            <label htmlFor="added_by">Added By (User ID):</label>
-            <input v-model="formData.added_by" type="number" id="added_by" name="_token" value="{{ csrf_token() }}"  required>
+                    <label for="added_by">Added By (User ID):</label>
+                    <input v-model="formData.added_by" type="number" id="added_by" required class="input-field">
 
-            <button type="submit">Submit</button>
-        </form>
+                    <button type="submit" class="buttons">Submit</button>
+                </form>
             </div>
         </main>
     </div>

@@ -1,28 +1,28 @@
 <template>
     <div id="app">
         <header>
-            <h1>login page</h1>
+            <h1>Create A New User</h1>
         </header>
         <main>
             <div>
-    <form @submit.prevent="register">
-        <label htmlFor="name">Name:</label>
-        <input type="text" v-model="userData.name" name="_token" value="{{ csrf_token() }}" required>
+                <form @submit.prevent="register" class="form-container all-form">
+                    <label htmlFor="name">Name:</label>
+                    <input type="text" v-model="userData.name" name="_token" value="{{ csrf_token() }}" required>
 
-        <label htmlFor="email">email_address:</label>
-        <input type="email" v-model="userData.email_address" name="_token" value="{{ csrf_token() }}" required>
+                    <label htmlFor="email">email_address:</label>
+                    <input type="email" v-model="userData.email_address" name="_token" value="{{ csrf_token() }}" required>
 
-        <label htmlFor="email">Email:</label>
-        <input type="email" v-model="userData.email" name="_token" value="{{ csrf_token() }}" required>
+                    <label htmlFor="email">Email:</label>
+                    <input type="email" v-model="userData.email" name="_token" value="{{ csrf_token() }}" required>
 
-        <label htmlFor="password">Password:</label>
-        <input type="password" v-model="userData.password" name="_token" value="{{ csrf_token() }}" required>
+                    <label htmlFor="password">Password:</label>
+                    <input type="password" v-model="userData.password" name="_token" value="{{ csrf_token() }}" required>
 
-        <label htmlFor="is_admin">Check to make user Admin:</label>
-        <input type="checkbox" v-model="userData.is_admin"  name="_token" value="{{ csrf_token() }}"/>
+                    <label htmlFor="is_admin">Check to make user Admin:</label>
+                    <input type="checkbox" v-model="userData.is_admin" name="_token" value="{{ csrf_token() }}"/>
 
-        <button type="submit">Create User</button>
-    </form>
+                    <button type="submit" class="buttons">Create User</button>
+                </form>
             </div>
         </main>
     </div>

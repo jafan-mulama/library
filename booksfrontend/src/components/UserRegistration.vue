@@ -1,19 +1,25 @@
 <template>
-    <form @submit.prevent="register">
-        <label htmlFor="name">Name:</label>
-        <input type="text" v-model="userData.name" required>
+    <header>
+        <h1>Create Account</h1>
+    </header>
+    <div class=".form-container">
+    <form  @submit.prevent="register" class="all-form">
+
+        <label>Name:</label>
+        <input type="text" v-model="userData.name" class="input-field" required>
 
         <label htmlFor="email">email_address:</label>
-        <input type="email" v-model="userData.email_address" required>
+        <input type="email" v-model="userData.email_address"  class="input-field" required>
 
         <label htmlFor="email">Email:</label>
-        <input type="email" v-model="userData.email" required>
+        <input type="email" v-model="userData.email" class="input-field" required>
 
         <label htmlFor="password">Password:</label>
-        <input type="password" v-model="userData.password" required>
+        <input type="password" v-model="userData.password" class="input-field" required>
 
-        <button type="submit">Register</button>
+        <button type="submit" class="buttons">Register</button>
     </form>
+    </div>
 </template>
 <script>
 import axios from 'axios';

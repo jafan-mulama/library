@@ -1,21 +1,22 @@
 <template>
     <div id="app">
         <header>
-            <h1>login page</h1>
+            <h1>Login Page</h1>
         </header>
         <main>
             <div>
-    <div class="login-container">
-        <form @submit.prevent="login" class="login-form">
-            <label >Enter your Login Details</label>
-            <br /> <br />
-            <input type="email" v-model="loginData.email" required class="input-field" placeholder="Email" name="_token" value="{{ csrf_token() }}" >
-            <br />
-            <input type="password" v-model="loginData.password" required class="input-field" placeholder="password" name="_token" value="{{ csrf_token() }}" >
+                <div class="form-container">
+                    <form @submit.prevent="login" class="all-form">
+                        <label>Enter your Login Details</label>
+                        <br /> <br />
 
-            <button type="submit" class="login-button">Login</button>
-        </form>
-    </div>
+                        <input type="email" v-model="loginData.email" required placeholder="Email" class="input-field">
+                        <br />
+                        <input type="password" v-model="loginData.password" required class="input-field" placeholder="Password">
+
+                        <button type="submit" class="buttons">Login</button>
+                    </form>
+                </div>
             </div>
         </main>
     </div>
@@ -82,18 +83,7 @@ export default {
 
 <style scoped>
 
-.login-container {
-    display: flex;
-    justify-content: center;
-    align-items: flex-start; /* Align to the top of the container */
-    height: 100vh; /* Set the height of the container to 100% of the viewport height */
-}
 
-.login-form {
-    max-width: 300px;
-    width: 100%;
-    margin-top: 100px; /* Adjust this value to control the distance from the top */
-}
 
 .input-field {
     width: 100%;
@@ -102,12 +92,5 @@ export default {
     box-sizing: border-box;
 }
 
-.login-button {
-    background-color: #5446cc;
-    color: white;
-    padding: 10px 15px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
+
 </style>
