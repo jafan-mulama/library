@@ -1,22 +1,31 @@
 <template>
+    <div id="app">
+        <header>
+            <h1>login page</h1>
+        </header>
+        <main>
+            <div>
     <form @submit.prevent="register">
         <label htmlFor="name">Name:</label>
-        <input type="text" v-model="userData.name" required>
+        <input type="text" v-model="userData.name" name="_token" value="{{ csrf_token() }}" required>
 
         <label htmlFor="email">email_address:</label>
-        <input type="email" v-model="userData.email_address" required>
+        <input type="email" v-model="userData.email_address" name="_token" value="{{ csrf_token() }}" required>
 
         <label htmlFor="email">Email:</label>
-        <input type="email" v-model="userData.email" required>
+        <input type="email" v-model="userData.email" name="_token" value="{{ csrf_token() }}" required>
 
         <label htmlFor="password">Password:</label>
-        <input type="password" v-model="userData.password" required>
+        <input type="password" v-model="userData.password" name="_token" value="{{ csrf_token() }}" required>
 
         <label htmlFor="is_admin">Check to make user Admin:</label>
-        <input type="checkbox" v-model="userData.is_admin" />
+        <input type="checkbox" v-model="userData.is_admin"  name="_token" value="{{ csrf_token() }}"/>
 
         <button type="submit">Create User</button>
     </form>
+            </div>
+        </main>
+    </div>
 </template>
 <script>
 import axios from 'axios';
@@ -40,7 +49,12 @@ export default {
             this.error = null;
 
             // Use the correct URL for your Laravel backend
-            axios.post('http://localhost:8000/api/register', this.userData)
+            axios.post('/api/register', this.userData, {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.head.querySelector('meta[name="csrf-token"]').content
+                }
+            })
                 .then(response => {
                     const { user, token } = response.data;
                     // Store the token securely (e.g., in local storage or a cookie)
