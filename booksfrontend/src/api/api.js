@@ -94,4 +94,26 @@ export async function fetchCurrentUserDetails() {
 }
 
 
+const BASE_URL = '/api'; // Adjust the base URL as needed
+
+// Function to fetch books
+export const fetchBooks = () => {
+    return axios.get(`${BASE_URL}/books`)
+        .then(response => response.data.books)
+        .catch(error => {
+            console.error('Error fetching books:', error);
+            throw error; // Propagate the error to the calling function
+        });
+};
+
+// Function to update a book
+export const updateBook = (bookId, updatedBook) => {
+    return axios.put(`${BASE_URL}/books/${bookId}`, updatedBook)
+        .then(response => response.data)
+        .catch(error => {
+            console.error('Error updating book:', error);
+            throw error;
+        });
+};
+
 

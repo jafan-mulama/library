@@ -1,71 +1,97 @@
 <template>
     <div>
-        <h1>Book Management</h1>
-        <button @click="logout">Logout</button>
-        <!-- Add Book Form -->
-        <form @submit.prevent="addBook">
-            <label for="name">Book Name:</label>
-            <input v-model="newBook.name" required>
+        <h2>Book Management</h2>
 
-            <label for="publisher">Publisher:</label>
-            <input v-model="newBook.publisher" required>
+        <!-- Display Books -->
+        <table>
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Publisher</th>
+                <th>ISBN</th>
+                <th>Category</th>
+                <th>Sub Category</th>
+                <th>Description</th>
+                <th>Pages</th>
+                <th>Image</th>
+                <th>Added By (User ID)</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr v-for="book in books" :key="book.id">
+                <td>{{ book.id }}</td>
+                <td>{{ book.name }}</td>
+                <td>{{ book.publisher }}</td>
+                <td>{{ book.isbn }}</td>
+                <td>{{ book.category }}</td>
+                <td>{{ book.sub_category }}</td>
+                <td>{{ book.description }}</td>
+                <td>{{ book.pages }}</td>
+                <td>{{ book.image }}</td>
+                <td>{{ book.added_by }}</td>
+                <td>
+                    <button @click="editBook(book.id)">Edit</button>
+                    <button @click="deleteBook(book.id)">Delete</button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
 
-            <label for="isbn">ISBN:</label>
-            <input v-model="newBook.isbn" required>
-
-            <!-- Add other input fields as needed -->
-
-            <button type="submit">Add Book</button>
-        </form>
-
-        <!-- List of Books -->
-        <div v-if="books.length">
-            <h2>Books:</h2>
-            <ul>
-                <li v-for="book in books" :key="book.id">
-                    {{ book.name }} - {{ book.publisher }}
-                    <!-- Display other book details as needed -->
-                </li>
-            </ul>
-        </div>
-        <div v-else>
-            <p>No books available.</p>
+        <!-- Update Book Modal -->
+        <div v-if="editBookId !== null">
+            <h3>Edit Book</h3>
+            <form @submit.prevent="updateBook">
+                <!-- ... (similar to the form structure in your previous example) ... -->
+            </form>
         </div>
     </div>
 </template>
 
 <script>
-import { logout } from '@/api/api';
+import { logout, fetchBooks, updateBook } from '@/api/api';
 export default {
-    name: 'BookManagement',
     data() {
         return {
-            newBook: {
+            books: [],
+            editBookId: null,
+            editedBook: {
                 name: '',
                 publisher: '',
                 isbn: '',
-                // Add other fields as needed
+                category: '',
+                sub_category: '',
+                description: '',
+                pages: '', // Assuming pages is an integer
+                image: '',
+                added_by: '', // Assuming added_by is an integer
             },
-            books: [], // Array to store the list of books
         };
     },
+
     methods: {
-        addBook() {
-            // TODO: Make an API request to add a new book
-            // After successfully adding the book, you may want to fetch the updated list of books
-            // You can use axios or any other HTTP client for making API requests
-
-            // For demonstration purposes, let's just push the new book to the local array
-            this.books.push(this.newBook);
-
-            // Clear the form fields
-            this.newBook = {
-                name: '',
-                publisher: '',
-                isbn: '',
-            };
+        // Use the fetchBooks function from api.js
+        fetchBooks() {
+            fetchBooks()
+                .then(books => {
+                    this.books = books;
+                })
+                .catch(error => {
+                    console.error('Error fetching books:', error);
+                });
         },
-
+        // Use the updateBook function from api.js
+        updateBook() {
+            updateBook(this.editBookId, this.editedBook)
+                .then(() => {
+                    this.fetchBooks();
+                    this.editBookId = null;
+                })
+                .catch(error => {
+                    console.error('Error updating book:', error);
+                });
+        },
         /** start of logout method reused import {logout} from "@/api/api"; **/
         async logout() {
             const isLoggedOut = await logout();
@@ -80,7 +106,70 @@ export default {
         // TODO: Add methods to fetch the list of books from the API
     },
     mounted() {
-        // TODO: Call a method to fetch the list of books when the component is mounted
+        this.fetchBooks();
     },
 };
 </script>
+
+<style scoped>
+/* Container styling */
+div {
+    margin: 20px;
+}
+
+/* Table styling */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    overflow-x: auto;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+/* Form styling */
+form {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    max-width: 400px;
+}
+
+label {
+    margin-bottom: 8px;
+}
+
+input, textarea {
+    margin-bottom: 16px;
+    padding: 8px;
+    box-sizing: border-box;
+}
+
+/* Button styling */
+button {
+    padding: 8px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+/* Responsive styles */
+@media (max-width: 600px) {
+    table {
+        overflow-x: auto;
+    }
+}
+</style>
