@@ -40,43 +40,43 @@
             </tbody>
         </table>
 
-         <!-- Update Book Modal -->
+
         <div v-if="editBookId !== null">
             <!-- Update Book Form -->
-            <form @submit.prevent="updateBook">
+            <form ref="editForm" @submit.prevent="updateBook">
                 <h3>Edit Book</h3>
                 <!-- Name Field -->
                 <label for="name">Name:</label>
-                <input v-model="editedBook.name" type="text" id="name" required>
+                <input v-model="editedBook.name" type="text" id="name" required autocomplete="off">
 
                 <!-- Publisher Field -->
                 <label for="publisher">Publisher:</label>
-                <input v-model="editedBook.publisher" type="text" id="publisher" required>
+                <input v-model="editedBook.publisher" type="text" id="publisher" required autocomplete="off">
 
                 <!-- ISBN Field -->
                 <label for="isbn">ISBN:</label>
-                <input v-model="editedBook.isbn" type="text" id="isbn" required>
+                <input v-model="editedBook.isbn" type="text" id="isbn" required autocomplete="off">
 
                 <!-- Other Fields ... -->
 
                 <!-- Pages Field -->
                 <label for="pages">Pages:</label>
-                <input v-model="editedBook.pages" type="number" id="pages" required>
+                <input v-model="editedBook.pages" type="number" id="pages" required autocomplete="off">
 
                 <!-- Image Field -->
                 <label for="image">Image URL:</label>
-                <input v-model="editedBook.image" type="text" id="image" required>
+                <input v-model="editedBook.image" type="text" id="image" required autocomplete="off">
 
                 <!-- Added By Field -->
                 <label for="added_by">Added By (User ID):</label>
-                <input v-model="editedBook.added_by" type="number" id="added_by" required>
+                <input v-model="editedBook.added_by" type="number" id="added_by" required autocomplete="off">
 
                 <!-- Update Button -->
                 <button type="submit">Update</button>
 
             </form>
+            </div>
         </div>
-    </div>
 </template>
 
 <script>
@@ -137,16 +137,22 @@ export default {
 
 
         editBook(bookId) {
-            // Use the getBookById function to fetch book details
-            getBookById(bookId)
+            getBookById(bookId) // Use the getBookById function to fetch book details
                 .then(book => {
                     // Assign book details to editedBook
                     this.editedBook = { ...book };
                     this.editBookId = bookId; // Set the book ID to initiate the edit
+                    this.scrollToEditForm();
                 })
                 .catch(error => {
                     console.error('Error fetching book details for edit:', error);
                 });
+        },
+        scrollToEditForm() { // Find the edit form element using a ref
+            const editFormElement = this.$refs.editForm; // Check if the element exists before scrolling
+            if (editFormElement) {// Scroll the element into view
+                editFormElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
         },
 
         /** start of logout method reused import {logout} from "@/api/api"; **/
@@ -160,8 +166,12 @@ export default {
             }
         },
 
+
+
+
         // TODO: Add methods to fetch the list of books from the API
     },
+
     mounted() {
         this.fetchBooks();
     },
@@ -229,4 +239,5 @@ button:hover {
         overflow-x: auto;
     }
 }
+
 </style>

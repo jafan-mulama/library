@@ -100,4 +100,35 @@ class BookController extends Controller
         }
     }
 
+    public function updateDatabase(Request $request)
+    {
+        try {
+            $data = $request->all(); // Assuming you send the updated data in the request
+
+            // Validate the request data if needed
+
+            // Update the book record in the 'books' table
+            DB::table('books')
+                ->where('id', $data['id'])
+                ->update([
+                    'name' => $data['name'],
+                    'publisher' => $data['publisher'],
+                    'isbn' => $data['isbn'],
+                    'category' => $data['category'],
+                    'sub_category' => $data['sub_category'],
+                    'description' => $data['description'],
+                    'pages' => $data['pages'],
+                    'image' => $data['image'],
+                    'added_by' => $data['added_by'],
+                    'updated_at' => now(), // Assuming you want to update the 'updated_at' timestamp
+                ]);
+
+            return response()->json(['success' => true, 'message' => 'Book updated successfully']);
+        } catch (\Exception $e) {
+            // Handle exceptions
+            return response()->json(['success' => false, 'message' => 'Error updating book', 'error' => $e->getMessage()], 500);
+        }
+
+}
+
 }

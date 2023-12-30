@@ -28,6 +28,7 @@ Route::post('books', [BookController::class, 'store'])->name('books.store');
 Route::put('/books/{id}', [BookController::class, 'update'])->name('books.update');
 Route::get('/books/{id}', [BookController::class, 'show'])->name('books.show');
 Route::delete('/books/{id}', [BookController::class, 'destroy'])->name('books.destroy');
+Route::post('/update-database', [BookController::class, 'updateDatabase']);
 
 
 // Routes for UserController
