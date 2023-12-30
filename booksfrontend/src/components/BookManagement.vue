@@ -33,8 +33,8 @@
                 <td>{{ book.image }}</td>
                 <td>{{ book.added_by }}</td>
                 <td>
-                    <button @click="editBook(book.id)">Double click to Edit</button>
-                    <button @click="deleteBook(book.id)">Delete</button>
+                    <button @click="editBook(book.id)">Double click to Edit</button> &nbsp;
+                    <button @click="deleteBook(book.id)" class="deleteButton">Delete</button>
                 </td>
             </tr>
             </tbody>
@@ -71,7 +71,7 @@
                 <label for="added_by">Added By (User ID):</label>
                 <input v-model="editedBook.added_by" type="number" id="added_by" value="addedByFromDatabase" required autocomplete="off" disabled>
                 <!-- Update Button -->
-                <button type="submit">Update</button>
+                <button type="submit" class="updateButton">Update</button>
 
             </form>
             </div>
@@ -201,65 +201,7 @@ export default {
 </script>
 
 <style scoped>
-/* Container styling */
-div {
-    margin: 20px;
-}
 
-/* Table styling */
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 20px;
-    overflow-x: auto;
-}
 
-th, td {
-    border: 1px solid #ddd;
-    padding: 8px;
-    text-align: left;
-}
-
-th {
-    background-color: #f2f2f2;
-}
-
-/* Form styling */
-form {
-    margin-top: 20px;
-    display: flex;
-    flex-direction: column;
-    max-width: 400px;
-}
-
-label {
-    margin-bottom: 8px;
-}
-
-input, textarea {
-    margin-bottom: 16px;
-    padding: 8px;
-    box-sizing: border-box;
-}
-
-/* Button styling */
-button {
-    padding: 8px;
-    background-color: #4caf50;
-    color: white;
-    border: none;
-    cursor: pointer;
-}
-
-button:hover {
-    background-color: #45a049;
-}
-
-/* Responsive styles */
-@media (max-width: 600px) {
-    table {
-        overflow-x: auto;
-    }
-}
 
 </style>
