@@ -16,7 +16,7 @@
                 <th>Description</th>
                 <th>Pages</th>
                 <th>Image</th>
-                <th>Added By (User ID)</th>
+                <th>Added By <br>(User ID)</th>
                 <th>Actions</th>
             </tr>
             </thead>
@@ -33,7 +33,7 @@
                 <td>{{ book.image }}</td>
                 <td>{{ book.added_by }}</td>
                 <td>
-                    <button @click="editBook(book.id)">Edit</button>
+                    <button @click="editBook(book.id)">Double click to Edit</button>
                     <button @click="deleteBook(book.id)">Delete</button>
                 </td>
             </tr>
@@ -69,8 +69,7 @@
 
                 <!-- Added By Field -->
                 <label for="added_by">Added By (User ID):</label>
-                <input v-model="editedBook.added_by" type="number" id="added_by" required autocomplete="off">
-
+                <input v-model="editedBook.added_by" type="number" id="added_by" value="addedByFromDatabase" required autocomplete="off" disabled>
                 <!-- Update Button -->
                 <button type="submit">Update</button>
 
@@ -80,7 +79,7 @@
 </template>
 
 <script>
-import {logout, fetchBooks, updateBook, deleteBook, getBookById} from '@/api/api';
+import {logout, fetchBooks, updateBook, deleteBook, getBookById, fetchCurrentUserDetails, fetchUserId} from '@/api/api';
 export default {
     data() {
         return {
@@ -95,8 +94,10 @@ export default {
                 description: '',
                 pages: '', // Assuming pages is an integer
                 image: '',
-                added_by: '', // Assuming added_by is an integer
+                added_by: null, // Assuming added_by is an integer
             },
+            addedByFromDatabase: null,
+            currentUserDetails: null,
         };
     },
 
@@ -112,7 +113,13 @@ export default {
                 });
         },
         // Use the updateBook function from api.js
-        updateBook() {
+        async updateBook() {
+            // Fetch user ID from the server before submitting the form
+            await this.fetchAddedByFromDatabase();
+            // Assign the user ID to the added_by field
+            this.editedBook.added_by = this.addedByFromDatabase;
+            // Update the book with the edited details
+            await updateBook(this.editBookId, this.editedBook);
             updateBook(this.editBookId, this.editedBook)
                 .then(() => {
                     this.fetchBooks();
@@ -121,6 +128,19 @@ export default {
                 .catch(error => {
                     console.error('Error updating book:', error);
                 });
+        },
+        async fetchAddedByFromDatabase() {
+            // Make use of the utility function to fetch user ID
+            try {
+                this.addedByFromDatabase = await fetchUserId();
+                // Assign the user ID to the added_by field in the editedBook object
+                this.editedBook.added_by = this.addedByFromDatabase;
+
+                // Fetch details for the currently authenticated user
+                this.currentUserDetails = await fetchCurrentUserDetails();
+            } catch (error) {
+                // Handle the error (if needed)
+            }
         },
 
         // deleteBook function from api.js
@@ -174,6 +194,8 @@ export default {
 
     mounted() {
         this.fetchBooks();
+        // Fetch user ID from the database when the component is mounted
+        this.fetchAddedByFromDatabase();
     },
 };
 </script>
