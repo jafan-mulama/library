@@ -58,4 +58,40 @@ export const requireUserRole = (requiredRole) => {
 };
 
 
+// Fetch user ID from the server
+export async function fetchUserId() {
+    try {
+        // Retrieve the user ID from the authentication state
+        const userId = localStorage.getItem('userId'); // Adjust the storage key as needed
+
+        if (!userId) {
+            throw new Error('User ID not found in the local storage.');
+        }
+
+        const response = await axios.get(`/api/users/${userId}`); // Adjust the endpoint as needed
+        return response.data.user.id;
+    } catch (error) {
+        console.error('Error fetching user ID:', error);
+        throw error; // Propagate the error to the calling function
+    }
+}
+
+// Fetch user details for the currently authenticated user
+export async function fetchCurrentUserDetails() {
+    try {
+        const userId = localStorage.getItem('userId'); // Adjust the storage key as needed
+
+        if (!userId) {
+            throw new Error('User ID not found in the local storage.');
+        }
+
+        const response = await axios.get(`/api/users/${userId}`); // Adjust the endpoint as needed
+        return response.data; // Adjust the response structure based on your API
+    } catch (error) {
+        console.error('Error fetching current user details:', error);
+        throw error;
+    }
+}
+
+
 

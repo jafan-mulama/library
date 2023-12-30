@@ -18,9 +18,17 @@ use App\Http\Controllers\BookLoanController;
 */
 
 // Public routes
+// login and register  routes
 Route::post('/register', [UserController::class, 'store'])->name('register');
 Route::post('/login', [UserController::class, 'login'])->name('login');
+
+// Routes for BookController
 Route::post('books', [BookController::class, 'store'])->name('books.store');
+
+// Routes for UserController
+Route::get('/users/{id}', [UserController::class, 'show'])->name('users.show');
+Route::get('/currentUser', [UserController::class, 'currentUser'])->name('currentUser.show');
+
 
 
 
@@ -46,7 +54,8 @@ Route::middleware(['auth:sanctum'])->group(function () {
 
 // Routes for UserController
     Route::get('/users', [UserController::class, 'index'])->name('users.index');
-    Route::get('/users/{id}', [UserController::class, 'show'])->name('users.show');
+//    Route::get('/users/{id}', [UserController::class, 'show'])->name('users.show');
+//    Route::get('/currentUser', [UserController::class, 'currentUser'])->name('currentUser.show');
     Route::post('/users', [UserController::class, 'store'])->name('users.store');
     Route::put('/users/{id}', [UserController::class, 'update'])->name('users.update');
     Route::delete('/users/{id}', [UserController::class, 'destroy'])->name('users.destroy');

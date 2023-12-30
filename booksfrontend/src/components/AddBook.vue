@@ -31,7 +31,7 @@
                     <input v-model="formData.image" type="text" id="image" required class="input-field">
 
                     <label for="added_by">Added By (User ID):</label>
-                    <input v-model="formData.added_by" type="number" id="added_by" required class="input-field">
+                    <input v-model="formData.added_by" type="number" id="added_by"  value="addedByFromDatabase" required class="input-field" disabled>
 
                     <button type="submit" class="buttons">Submit</button>
                 </form>
@@ -41,6 +41,7 @@
 </template>
 <script>
 import axios from "axios";
+import { fetchUserId,fetchCurrentUserDetails  } from '@/api/api';
 export default {
     name: '/AddBook',
     data() {
@@ -54,12 +55,16 @@ export default {
                 description: 'asdfghjk',
                 pages: 1, // Assuming pages is an integer
                 image: 'h.jpg',
-                added_by: 1, // Assuming added_by is an integer
+                added_by: null, // Assuming added_by is an integer
             },
+            addedByFromDatabase: null,
+            currentUserDetails: null,
         };
     },
         methods: {
-            submitForm() {
+            async submitForm() {
+                // Fetch user ID from the server before submitting the form
+                await this.fetchAddedByFromDatabase();
                 // Send the form data to the server using an HTTP request (e.g., Axios)
                 axios.post('http://localhost:8080/api/books', this.formData, {
                     headers: {
@@ -75,11 +80,25 @@ export default {
                         console.error('Error submitting data:', error);
                     });
             },
+            async fetchAddedByFromDatabase() {
+                // Make use of the utility function to fetch user ID
+                try {
+                    this.addedByFromDatabase = await fetchUserId();
+                    this.formData.added_by = this.addedByFromDatabase;
+
+                    // Fetch details for the currently authenticated user
+                    this.currentUserDetails = await fetchCurrentUserDetails();
+                } catch (error) {
+                    // Handle the error (if needed)
+                }
+            },
+        },
             mounted() {
+                // Fetch user ID from the database when the component is mounted
+                this.fetchAddedByFromDatabase();
                 // Retrieve CSRF token from meta tag when the component is mounted
                 this.csrfToken = document.head.querySelector('meta[name="csrf-token"]').content;
             },
-        },
 
         // resetForm() {
         //     // Reset form fields after successful submission

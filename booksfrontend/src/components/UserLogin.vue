@@ -52,6 +52,7 @@ export default {
 
                     localStorage.setItem('token', token);
                     localStorage.setItem('userRole', user.role);
+                    localStorage.setItem('userId', user.id); // Store the user ID
 
                     console.log(user);
                     console.log('Login successful!');
