@@ -119,3 +119,11 @@ th {
         font-size: 12px; /* Adjust font size for smaller screens */
     }
 }
+/* Apply the resize property to the textarea */
+textarea {
+    resize: both;
+    overflow: auto; /* This property is added to handle the case where resizing might cause content to overflow */
+    /* Add any other styling you want for the textarea */
+    width: 300px;
+    height: 150px;
+}

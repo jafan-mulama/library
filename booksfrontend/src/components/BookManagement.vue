@@ -42,44 +42,36 @@
 
 
         <div v-if="editBookId !== null">
-            <!-- Update Book Form -->
             <form ref="editForm" @submit.prevent="updateBook">
                 <h3>Edit Book</h3>
-                <!-- Name Field -->
                 <label for="name">Name:</label>
                 <input v-model="editedBook.name" type="text" id="name" required autocomplete="off">
-
-                <!-- Publisher Field -->
                 <label for="publisher">Publisher:</label>
                 <input v-model="editedBook.publisher" type="text" id="publisher" required autocomplete="off">
-
-                <!-- ISBN Field -->
                 <label for="isbn">ISBN:</label>
                 <input v-model="editedBook.isbn" type="text" id="isbn" required autocomplete="off">
-
-                <!-- Other Fields ... -->
-
-                <!-- Pages Field -->
+                <label for="category">Category:</label>
+                <input v-model="editedBook.category" type="text" id="publisher" required autocomplete="off">
+                <label for="sub_category">Sub Category:</label>
+                <input v-model="editedBook.sub_category" type="text" id="publisher" required autocomplete="off">
+                <label for="description">Description:</label>
+                <textarea v-model="editedBook.description" type="textarea" id="publisher" required autocomplete="off"> </textarea>
                 <label for="pages">Pages:</label>
                 <input v-model="editedBook.pages" type="number" id="pages" required autocomplete="off">
-
-                <!-- Image Field -->
                 <label for="image">Image URL:</label>
                 <input v-model="editedBook.image" type="text" id="image" required autocomplete="off">
-
-                <!-- Added By Field -->
                 <label for="added_by">Added By (User ID):</label>
-                <input v-model="editedBook.added_by" type="number" id="added_by" value="addedByFromDatabase" required autocomplete="off" disabled>
-                <!-- Update Button -->
+                <input v-model="editedBook.added_by" type="number" id="added_by" value="addedByFromDatabase" required
+                       autocomplete="off" disabled>
                 <button type="submit" class="updateButton">Update</button>
-
             </form>
-            </div>
         </div>
+    </div>
 </template>
 
 <script>
 import {logout, fetchBooks, updateBook, deleteBook, getBookById, fetchCurrentUserDetails, fetchUserId} from '@/api/api';
+
 export default {
     data() {
         return {
@@ -160,7 +152,7 @@ export default {
             getBookById(bookId) // Use the getBookById function to fetch book details
                 .then(book => {
                     // Assign book details to editedBook
-                    this.editedBook = { ...book };
+                    this.editedBook = {...book};
                     this.editBookId = bookId; // Set the book ID to initiate the edit
                     this.scrollToEditForm();
                 })
@@ -171,7 +163,7 @@ export default {
         scrollToEditForm() { // Find the edit form element using a ref
             const editFormElement = this.$refs.editForm; // Check if the element exists before scrolling
             if (editFormElement) {// Scroll the element into view
-                editFormElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                editFormElement.scrollIntoView({behavior: 'smooth', block: 'start'});
             }
         },
 
@@ -187,8 +179,6 @@ export default {
         },
 
 
-
-
         // TODO: Add methods to fetch the list of books from the API
     },
 
@@ -201,7 +191,6 @@ export default {
 </script>
 
 <style scoped>
-
 
 
 </style>
