@@ -3,6 +3,7 @@
         <h2>Book Management</h2>
 
         <!-- Display Books -->
+        <button @click="logout">Logout</button>
         <table>
             <thead>
             <tr>
@@ -39,18 +40,47 @@
             </tbody>
         </table>
 
-        <!-- Update Book Modal -->
+         <!-- Update Book Modal -->
         <div v-if="editBookId !== null">
-            <h3>Edit Book</h3>
+            <!-- Update Book Form -->
             <form @submit.prevent="updateBook">
-                <!-- ... (similar to the form structure in your previous example) ... -->
+                <h3>Edit Book</h3>
+                <!-- Name Field -->
+                <label for="name">Name:</label>
+                <input v-model="editedBook.name" type="text" id="name" required>
+
+                <!-- Publisher Field -->
+                <label for="publisher">Publisher:</label>
+                <input v-model="editedBook.publisher" type="text" id="publisher" required>
+
+                <!-- ISBN Field -->
+                <label for="isbn">ISBN:</label>
+                <input v-model="editedBook.isbn" type="text" id="isbn" required>
+
+                <!-- Other Fields ... -->
+
+                <!-- Pages Field -->
+                <label for="pages">Pages:</label>
+                <input v-model="editedBook.pages" type="number" id="pages" required>
+
+                <!-- Image Field -->
+                <label for="image">Image URL:</label>
+                <input v-model="editedBook.image" type="text" id="image" required>
+
+                <!-- Added By Field -->
+                <label for="added_by">Added By (User ID):</label>
+                <input v-model="editedBook.added_by" type="number" id="added_by" required>
+
+                <!-- Update Button -->
+                <button type="submit">Update</button>
+
             </form>
         </div>
     </div>
 </template>
 
 <script>
-import { logout, fetchBooks, updateBook } from '@/api/api';
+import {logout, fetchBooks, updateBook, deleteBook, getBookById} from '@/api/api';
 export default {
     data() {
         return {
@@ -92,6 +122,33 @@ export default {
                     console.error('Error updating book:', error);
                 });
         },
+
+        // deleteBook function from api.js
+        deleteBook(bookId) {
+            // Call the deleteBook function from api.js
+            deleteBook(bookId)
+                .then(() => {
+                    this.fetchBooks(); // Refresh the book list after deletion
+                })
+                .catch(error => {
+                    console.error('Error deleting book:', error);
+                });
+        },
+
+
+        editBook(bookId) {
+            // Use the getBookById function to fetch book details
+            getBookById(bookId)
+                .then(book => {
+                    // Assign book details to editedBook
+                    this.editedBook = { ...book };
+                    this.editBookId = bookId; // Set the book ID to initiate the edit
+                })
+                .catch(error => {
+                    console.error('Error fetching book details for edit:', error);
+                });
+        },
+
         /** start of logout method reused import {logout} from "@/api/api"; **/
         async logout() {
             const isLoggedOut = await logout();

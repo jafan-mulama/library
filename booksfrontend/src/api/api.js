@@ -106,6 +106,16 @@ export const fetchBooks = () => {
         });
 };
 
+// Function to fetch a book by ID
+export const getBookById = (bookId) => {
+    return axios.get(`${BASE_URL}/books/${bookId}`)
+        .then(response => response.data.book)
+        .catch(error => {
+            console.error(`Error fetching book with ID ${bookId}:`, error);
+            throw error;
+        });
+};
+
 // Function to update a book
 export const updateBook = (bookId, updatedBook) => {
     return axios.put(`${BASE_URL}/books/${bookId}`, updatedBook)
@@ -115,5 +125,31 @@ export const updateBook = (bookId, updatedBook) => {
             throw error;
         });
 };
+
+
+// Function to delete a book
+export const deleteBook = (bookId) => {
+    console.log('Deleting book with ID:', bookId);
+    const confirmed = window.confirm('Are you sure you want to delete this book?');
+
+    if (!confirmed) {
+        return Promise.resolve(); // Resolve the promise without doing anything if not confirmed
+    }
+
+    return axios.delete(`${BASE_URL}/books/${bookId}}`)
+        .then(() => {
+            console.log('Book deleted successfully');
+        })
+        .catch(error => {
+            console.error('Error deleting book:', error);
+            throw error; // Propagate the error to the calling function
+        });
+};
+
+// Function to edit a book
+
+
+
+
 
 

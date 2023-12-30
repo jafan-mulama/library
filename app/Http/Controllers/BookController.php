@@ -79,17 +79,25 @@ class BookController extends Controller
 
         return response()->json(['book' => $book]);
     }
-
-
+// Add a new endpoint to get book details by ID
     public function destroy($id)
     {
-        // Find the book by ID
-        $book = Book::findOrFail($id);
+        try {
+            // Find the book by ID
+            $book = Book::findOrFail($id);
 
-        // Delete the book
-        $book->delete();
+            // Delete the book
+            $book->delete();
 
-        return response()->json(['message' => 'Book deleted successfully']);
+            \Log::info('Book deleted successfully');
+
+            return response()->json(['message' => 'Book deleted successfully']);
+        } catch (\Exception $e) {
+            \Log::error('Error deleting book: ' . $e->getMessage());
+
+            // Return an error response
+            return response()->json(['error' => 'Failed to delete book'], 500);
+        }
     }
 
 }

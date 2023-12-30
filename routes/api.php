@@ -29,6 +29,7 @@ Route::put('/books/{id}', [BookController::class, 'update'])->name('books.update
 Route::get('/books/{id}', [BookController::class, 'show'])->name('books.show');
 Route::delete('/books/{id}', [BookController::class, 'destroy'])->name('books.destroy');
 
+
 // Routes for UserController
 Route::get('/users/{id}', [UserController::class, 'show'])->name('users.show');
 Route::get('/currentUser', [UserController::class, 'currentUser'])->name('currentUser.show');
