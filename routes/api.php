@@ -49,22 +49,28 @@ Route::middleware(['auth:sanctum'])->group(function () {
     //Route::get('/books', [BookController::class, 'index'])->name('index');
 
 
-    // Routes for BookLoanController (accessible only by admin users)
-    Route::middleware(['admin'])->group(function () {
+    // Routes for BookLoanController accessible only by admin users
+    Route::middleware(['auth:sanctum', 'admin'])->group(function () {
+        // Book Loan Routes
         Route::get('/book-loans', [BookLoanController::class, 'index'])->name('book_loans.index');
         Route::get('/book-loans/{id}', [BookLoanController::class, 'show'])->name('book_loans.show');
-        Route::post('/book-loans', [BookLoanController::class, 'store'])->name('book_loans.store');
-        Route::put('/book-loans/{id}', [BookLoanController::class, 'update'])->name('book_loans.update');
+        Route::post('/book-loans/borrow', [BookLoanController::class, 'borrowBook'])->name('book_loans.borrow');
+        Route::put('/book-loans/approve/{id}', [BookLoanController::class, 'approveLoan'])->name('book_loans.approve');
+        Route::put('/book-loans/extend/{id}', [BookLoanController::class, 'extendLoan'])->name('book_loans.extend');
+        Route::put('/book-loans/return/{id}', [BookLoanController::class, 'returnBook'])->name('book_loans.return');
         Route::delete('/book-loans/{id}', [BookLoanController::class, 'destroy'])->name('book_loans.destroy');
-    });
 
-    // Additional route for admin middleware
-    Route::middleware(['auth:sanctum', 'admin'])->group(function () {
-        // Example admin-only route
+        // Admin Dashboard Route (Example)
         Route::get('/admin-dashboard', function () {
             return 'Admin Dashboard';
         });
     });
+
+// Additional route for non-admin users (if needed)
+    Route::middleware(['auth:sanctum'])->group(function () {
+        // Add any routes that should be accessible by authenticated non-admin users here
+    });
+
 
 
 // Routes for UserController
